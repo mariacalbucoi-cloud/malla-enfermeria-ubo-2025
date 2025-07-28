@@ -1,124 +1,72 @@
-/* Tipografía y fondo general */
+/* Estilos generales */
 body {
-  font-family: "Times New Roman", Times, serif;
-  background-color: #b3d9ff; /* celeste pastel */
+  font-family: "Times New Roman", serif;
+  background-color: #a7c7e7; /* celeste pastel sólido */
   margin: 0;
-  padding: 1rem;
-  color: #003366; /* azul oscuro para buen contraste */
-  user-select: none;
-  cursor: default;
-  overflow-x: hidden;
+  padding: 0;
+  color: #333;
+  cursor: default; /* cursor normal */
 }
 
-/* Contenedor de la malla curricular */
+/* Contenedor principal de la malla */
 #malla-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
-}
-
-/* Cada semestre */
-.semestre {
-  border: 2px solid #99c2ff;
-  background-color: #d9ecff; /* celeste muy suave */
-  border-radius: 12px;
-  width: 320px;
   padding: 1rem;
-  box-shadow: 0 0 8px #a3c2ffcc;
-  transition: box-shadow 0.3s ease;
 }
 
-.semestre:hover {
-  box-shadow: 0 0 15px #7bb1ffcc;
+/* Estilo de cada semestre */
+.semestre {
+  border: 2px solid #88aadd;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  width: 320px;
+  background-color: #d9e9fb; /* tono celeste muy claro */
 }
 
-/* Título semestre */
-.semestre > h2 {
+/* Estilo título semestre */
+.semestre h2 {
   text-align: center;
-  color: #004080;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  text-shadow: 0 0 3px #99c2ff;
+  color: #4a6fa5;
+  margin-top: 0;
 }
 
-/* Estilo base de cada ramo */
+/* Estilo de cada ramo */
 .ramo {
   cursor: pointer;
-  margin-bottom: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1.8px solid #7db9ff;
-  background-color: #cce6ff;
-  color: #003366;
-  font-weight: 600;
-  box-shadow: 0 0 5px #a3c2ffaa;
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    color 0.3s ease;
-  position: relative;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #789bd1;
+  background-color: #e6f0ff; /* celeste pastel muy suave */
+  color: #1e3a8a;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Brillo suave al pasar el cursor */
-.ramo:hover {
-  box-shadow:
-    0 0 12px 3px #80b3ff,
-    0 0 20px 6px #a0c8ffcc;
-}
-
-/* Estado aprobado */
+/* Ramo aprobado */
 .ramo.aprobado {
-  background-color: #a6d8a8; /* verde pastel */
+  background-color: #c7e6c7; /* verde pastel suave */
   border-color: #4caf50;
-  color: #1b4600;
-  box-shadow: 0 0 12px #66bb6a;
+  color: #2d5d2d;
 }
 
-/* Estado bloqueado */
+/* Ramo bloqueado */
 .ramo.bloqueado {
-  background-color: #f7d4d4; /* rojo pastel muy suave */
+  background-color: #f2dede; /* rojo pastel suave */
   border-color: #e57373;
   color: #a94442;
-  opacity: 0.6;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Info de prerrequisitos debajo del nombre */
-.ramo > div {
-  font-size: 0.8em;
-  margin-top: 4px;
-  color: #004080;
-  font-weight: normal;
-  text-shadow: none;
+  opacity: 0.7;
 }
 
 /* Footer */
 footer {
-  margin-top: 2rem;
   text-align: center;
-  font-size: 0.9em;
-  color: #004080;
-  font-style: italic;
-  user-select: none;
-}
-
-/* Brillo que queda "tras" el cursor: efecto sencillo con animación */
-@keyframes brilloCursor {
-  0% {
-    box-shadow: 0 0 5px 2px rgba(128, 179, 255, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 15px 6px rgba(128, 179, 255, 0.3);
-  }
-  100% {
-    box-shadow: 0 0 5px 2px rgba(128, 179, 255, 0.7);
-  }
-}
-
-/* Efecto visual al mover el mouse (opcional) */
-body:hover {
-  animation: brilloCursor 2s infinite ease-in-out;
+  padding: 1rem;
+  background-color: #8fbbe9; /* celeste pastel */
+  color: white;
+  font-weight: bold;
+  font-family: "Times New Roman", serif;
+  margin-top: 2rem;
 }
