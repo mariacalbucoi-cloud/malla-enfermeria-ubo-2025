@@ -1,22 +1,27 @@
-/* Estilos generales */
-body {
+/* Reset básico para html y body */
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   font-family: "Times New Roman", serif;
-  background-color: #b3d9ff; /* Celeste pastel sólido */
-  color: #31708e; /* Azul pastel para texto */
+  background-color: #b3d9ff; /* celeste pastel sólido */
+  color: #31708e; /* azul oscuro suave */
 }
 
-/* Header centrado */
+/* Header centrado y estilizado */
 header {
-  text-align: center;
+  width: 100%;
   padding: 1rem 0;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 header h1 {
   margin: 0;
   font-size: 2.5rem;
-  color: #2f4f6f;
-  font-family: "Times New Roman", serif;
+  color: #2f4f6f; /* tono azul */
 }
 
 header p {
@@ -25,7 +30,7 @@ header p {
   color: #31708e;
 }
 
-/* Contenedor de la malla */
+/* Contenedor principal */
 #malla-container {
   display: flex;
   flex-wrap: wrap;
@@ -33,54 +38,50 @@ header p {
   padding: 1rem;
 }
 
-/* Semestres */
+/* Estilo para cada semestre */
 .semestre {
-  border: 2px solid #8fbce6; /* Azul pastel */
+  border: 2px solid #9dcde1; /* azul pastel */
   padding: 1rem;
   margin: 1rem;
   border-radius: 10px;
   width: 300px;
-  background-color: #d9ecff; /* Celeste más claro */
+  background-color: #d9ecff; /* celeste muy claro */
 }
 
-/* Ramos */
+/* Cada ramo (asignatura) */
 .ramo {
   cursor: pointer;
   margin-bottom: 8px;
   padding: 6px;
   border-radius: 6px;
-  border: 1px solid #a0c4ff;
-  background-color: #e6f0ff; /* Celeste pastel claro */
-  color: #2f4f6f;
-  user-select: none;
-  transition: background-color 0.3s, border-color 0.3s;
+  border: 1px solid #9dcde1;
+  background-color: #f0f8ff; /* azul pastel clarito */
+  color: #1e3d59;
+  user-select: none; /* evita seleccionar texto accidentalmente */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Estado aprobado */
 .ramo.aprobado {
-  background-color: #c1e8c1; /* Verde pastel */
+  background-color: #c1e8c1;
   border-color: #4caf50;
-  color: #2f4f2f;
 }
 
 /* Estado bloqueado */
 .ramo.bloqueado {
-  background-color: #f0d4d4; /* Rosa pastel */
+  background-color: #f0d4d4;
   border-color: #e57373;
   opacity: 0.6;
-  color: #8b0000;
 }
 
 /* Pie de página */
 footer {
   text-align: center;
   padding: 1rem 0;
+  color: #2f4f6f;
   font-size: 0.9rem;
-  color: #31708e;
-  font-family: "Times New Roman", serif;
+  background-color: #d9ecff;
+  border-top: 1px solid #9dcde1;
+  margin-top: 2rem;
 }
 
-/* Cursor normal (sin efectos especiales) */
-body {
-  cursor: default;
-}
