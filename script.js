@@ -89,8 +89,10 @@
         divRamo.classList.add('aprobado');
       } else if (puedeDesbloquear(prerequisitos)) {
         divRamo.classList.remove('bloqueado');
+        divRamo.classList.remove('aprobado');
       } else {
         divRamo.classList.add('bloqueado');
+        divRamo.classList.remove('aprobado');
       }
     });
   }
@@ -105,25 +107,19 @@
       ramos.forEach(ramo => {
         const divRamo = document.createElement("div");
         divRamo.className = "ramo bloqueado";
-        divRamo.textContent = ramo.nombre;
+        // Aquí incluimos semestre + nombre en el texto visible:
+        divRamo.textContent = `${semestre} - ${ramo.nombre}`;
         divRamo.dataset.nombre = ramo.nombre;
         divRamo.dataset.prerequisitos = JSON.stringify(ramo.prerequisitos || []);
 
-        const info = document.createElement("div");
-        info.style.fontSize = '0.85em';
-        info.style.marginTop = '4px';
-        info.textContent = ramo.prerequisitos?.length
-          ? `Prerrequisitos: ${ramo.prerequisitos.join(", ")}`
-          : "Sin prerrequisitos";
-
-        divRamo.appendChild(info);
-
         divRamo.addEventListener("click", () => {
           if (puedeDesbloquear(ramo.prerequisitos)) {
-            if (!aprobados.has(ramo.nombre)) {
+            if (aprobados.has(ramo.nombre)) {
+              aprobados.delete(ramo.nombre);
+            } else {
               aprobados.add(ramo.nombre);
-              actualizarEstadoRamos();
             }
+            actualizarEstadoRamos();
           } else {
             alert("Aún no cumples con los prerrequisitos para: " + ramo.nombre);
           }
