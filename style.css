@@ -1,90 +1,124 @@
-/* Estilos generales */
+/* Tipografía y fondo general */
 body {
-  cursor: default;
-  font-family: "Times New Roman", serif;
-  background-color: #cde6f7; /* celeste pastel */
-  color: #004d80; /* azul oscuro pastel */
+  font-family: "Times New Roman", Times, serif;
+  background-color: #b3d9ff; /* celeste pastel */
   margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(255 255 255 / 0.3) 2px, transparent 3px),
-    radial-gradient(circle at 40% 60%, rgba(255 255 255 / 0.2) 2px, transparent 3px),
-    radial-gradient(circle at 70% 40%, rgba(255 255 255 / 0.25) 2px, transparent 3px);
-  background-repeat: repeat;
-  background-size: 50px 50px;
-  position: relative;
-  overflow: hidden;
+  padding: 1rem;
+  color: #003366; /* azul oscuro para buen contraste */
+  user-select: none;
+  cursor: default;
+  overflow-x: hidden;
 }
 
-/* Estilos para los ramos */
+/* Contenedor de la malla curricular */
+#malla-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Cada semestre */
+.semestre {
+  border: 2px solid #99c2ff;
+  background-color: #d9ecff; /* celeste muy suave */
+  border-radius: 12px;
+  width: 320px;
+  padding: 1rem;
+  box-shadow: 0 0 8px #a3c2ffcc;
+  transition: box-shadow 0.3s ease;
+}
+
+.semestre:hover {
+  box-shadow: 0 0 15px #7bb1ffcc;
+}
+
+/* Título semestre */
+.semestre > h2 {
+  text-align: center;
+  color: #004080;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-shadow: 0 0 3px #99c2ff;
+}
+
+/* Estilo base de cada ramo */
 .ramo {
   cursor: pointer;
-  margin-bottom: 8px;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #4da6ff;
-  background-color: #e6f2ff; /* celeste muy claro */
-  color: #004d80;
-  transition: background-color 0.3s, border-color 0.3s;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1.8px solid #7db9ff;
+  background-color: #cce6ff;
+  color: #003366;
+  font-weight: 600;
+  box-shadow: 0 0 5px #a3c2ffaa;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+  position: relative;
 }
 
+/* Brillo suave al pasar el cursor */
+.ramo:hover {
+  box-shadow:
+    0 0 12px 3px #80b3ff,
+    0 0 20px 6px #a0c8ffcc;
+}
+
+/* Estado aprobado */
 .ramo.aprobado {
-  background-color: #c1e8c1;
+  background-color: #a6d8a8; /* verde pastel */
   border-color: #4caf50;
+  color: #1b4600;
+  box-shadow: 0 0 12px #66bb6a;
 }
 
+/* Estado bloqueado */
 .ramo.bloqueado {
-  background-color: #f0d4d4;
+  background-color: #f7d4d4; /* rojo pastel muy suave */
   border-color: #e57373;
+  color: #a94442;
   opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-/* Estilos para los semestres */
-.semestre {
-  border: 2px solid #80b3ff;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 10px;
-  width: 300px;
-  background-color: #f0f9ff;
-  color: #004d80;
-  box-shadow: 0 0 8px rgba(0, 77, 128, 0.1);
-}
-
-#titulo {
-  text-align: center;
-  color: #004d80;
-  margin-bottom: 1rem;
-}
-
-/* Efecto de brillo que sigue al cursor */
-.cursor-trail {
-  position: fixed;
-  pointer-events: none;
-  width: 10px;
-  height: 10px;
-  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(173,216,230,0) 70%);
-  border-radius: 50%;
-  filter: drop-shadow(0 0 5px rgba(173,216,230,0.8));
-  animation: fadeOut 1s forwards;
-  mix-blend-mode: screen;
-  z-index: 9999;
-}
-
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    transform: scale(2);
-  }
+/* Info de prerrequisitos debajo del nombre */
+.ramo > div {
+  font-size: 0.8em;
+  margin-top: 4px;
+  color: #004080;
+  font-weight: normal;
+  text-shadow: none;
 }
 
 /* Footer */
 footer {
-  text-align: center;
-  padding: 1rem;
-  color: #004d80;
-  background-color: #e6f2ff;
-  border-top: 1px solid #80b3ff;
   margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9em;
+  color: #004080;
+  font-style: italic;
+  user-select: none;
+}
+
+/* Brillo que queda "tras" el cursor: efecto sencillo con animación */
+@keyframes brilloCursor {
+  0% {
+    box-shadow: 0 0 5px 2px rgba(128, 179, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 15px 6px rgba(128, 179, 255, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 5px 2px rgba(128, 179, 255, 0.7);
+  }
+}
+
+/* Efecto visual al mover el mouse (opcional) */
+body:hover {
+  animation: brilloCursor 2s infinite ease-in-out;
 }
