@@ -2,9 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Malla Enfermería UBO 2025</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .ramo { cursor: pointer; margin-bottom: 8px; padding: 6px; border-radius: 6px; border: 1px solid #ccc; background-color: #f9f9f9; }
+    .ramo.aprobado { background-color: #c1e8c1; border-color: #4caf50; }
+    .ramo.bloqueado { background-color: #f0d4d4; border-color: #e57373; opacity: 0.6; }
+    .semestre { border: 2px solid #dba3e3; padding: 1rem; margin: 1rem; border-radius: 10px; width: 300px; background-color: #fff0fa; }
+    #malla-container { display: flex; flex-wrap: wrap; justify-content: center; }
+  </style>
 </head>
 <body>
   <header>
@@ -12,15 +19,78 @@
     <p>Versión 2025 - Interactiva</p>
   </header>
 
-  <main id="malla-container">
-    <!-- Semestres serán cargados dinámicamente -->
-  </main>
+  <main id="malla-container"></main>
 
   <footer>
     <p>© 2025 Universidad Bernardo O'Higgins</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const malla = {/* mismo contenido de malla actual */};
+    const aprobados = new Set();
+
+    function puedeDesbloquear(prerequisitos) {
+      return (prerequisitos || []).every(req => aprobados.has(req));
+    }
+
+    function actualizarEstadoRamos() {
+      document.querySelectorAll('.ramo').forEach(divRamo => {
+        const nombre = divRamo.dataset.nombre;
+        const prerequisitos = JSON.parse(divRamo.dataset.prerequisitos || '[]');
+        if (aprobados.has(nombre)) {
+          divRamo.classList.remove('bloqueado');
+          divRamo.classList.add('aprobado');
+        } else if (puedeDesbloquear(prerequisitos)) {
+          divRamo.classList.remove('bloqueado');
+        } else {
+          divRamo.classList.add('bloqueado');
+        }
+      });
+    }
+
+    function crearMallaInteractiva() {
+      const contenedor = document.getElementById("malla-container");
+      for (const [semestre, ramos] of Object.entries(malla)) {
+        const divSemestre = document.createElement("div");
+        divSemestre.className = "semestre";
+        divSemestre.innerHTML = `<h2>${semestre}</h2>`;
+
+        ramos.forEach(ramo => {
+          const divRamo = document.createElement("div");
+          divRamo.className = "ramo bloqueado";
+          divRamo.textContent = ramo.nombre;
+          divRamo.dataset.nombre = ramo.nombre;
+          divRamo.dataset.prerequisitos = JSON.stringify(ramo.prerequisitos || []);
+
+          const info = document.createElement("div");
+          info.style.fontSize = '0.85em';
+          info.style.marginTop = '4px';
+          info.textContent = ramo.prerequisitos && ramo.prerequisitos.length
+            ? `Prerrequisitos: ${ramo.prerequisitos.join(", ")}`
+            : "Sin prerrequisitos";
+
+          divRamo.appendChild(info);
+
+          divRamo.addEventListener("click", () => {
+            if (puedeDesbloquear(ramo.prerequisitos)) {
+              if (!aprobados.has(ramo.nombre)) {
+                aprobados.add(ramo.nombre);
+                actualizarEstadoRamos();
+              }
+            } else {
+              alert("Aún no cumples con los prerrequisitos para: " + ramo.nombre);
+            }
+          });
+
+          divSemestre.appendChild(divRamo);
+        });
+
+        contenedor.appendChild(divSemestre);
+      }
+      actualizarEstadoRamos();
+    }
+
+    document.addEventListener("DOMContentLoaded", crearMallaInteractiva);
+  </script>
 </body>
 </html>
-
