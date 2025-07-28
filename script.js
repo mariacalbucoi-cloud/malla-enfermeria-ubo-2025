@@ -1,4 +1,5 @@
-const malla = {
+// script.js
+const asignaturas = {
   "Primer semestre": [
     { nombre: "Habilidades Académicas I" },
     { nombre: "Inglés I" },
@@ -73,64 +74,45 @@ const malla = {
   ]
 };
 
-const aprobados = new Set();
+const container = document.getElementById("asignaturas");
 
-function puedeDesbloquear(prerequisitos) {
-  return (prerequisitos || []).every(req => aprobados.has(req));
-}
+const estadoRamos = {}; // Guarda el estado de cada ramo
 
-function actualizarEstadoRamos() {
-  document.querySelectorAll('.ramo').forEach(divRamo => {
-    const nombre = divRamo.dataset.nombre;
-    const prerequisitos = JSON.parse(divRamo.dataset.prerequisitos || '[]');
-    if (aprobados.has(nombre)) {
-      divRamo.classList.remove('bloqueado');
-      divRamo.classList.add('aprobado');
-    } else if (puedeDesbloquear(prerequisitos)) {
-      divRamo.classList.remove('bloqueado');
-    } else {
-      divRamo.classList.add('bloqueado');
-    }
-  });
-}
+function crearInterfaz() {
+  for (const semestre in asignaturas) {
+    const semestreDiv = document.createElement("div");
+    semestreDiv.className = "semestre";
 
-function crearMallaInteractiva() {
-  const contenedor = document.getElementById("malla-container");
+    const titulo = document.createElement("h2");
+    titulo.textContent = semestre;
+    semestreDiv.appendChild(titulo);
 
-  // Limpiar contenedor para evitar duplicados
-  contenedor.innerHTML = '';
+    asignaturas[semestre].forEach(ramo => {
+      const boton = document.createElement("button");
+      boton.textContent = ramo.nombre;
+      boton.className = "ramo";
+      boton.dataset.nombre = ramo.nombre;
+      boton.dataset.semestre = semestre;
 
-  for (const [semestre, ramos] of Object.entries(malla)) {
-    const divSemestre = document.createElement("div");
-    divSemestre.className = "semestre";
-    divSemestre.innerHTML = `<h2>${semestre}</h2>`;
-
-    ramos.forEach(ramo => {
-      const divRamo = document.createElement("div");
-      divRamo.className = "ramo bloqueado";
-      divRamo.textContent = ramo.nombre;
-      divRamo.dataset.nombre = ramo.nombre;
-      divRamo.dataset.prerequisitos = JSON.stringify(ramo.prerequisitos || []);
-
-      divRamo.addEventListener("click", () => {
-        if (puedeDesbloquear(ramo.prerequisitos)) {
-          if (aprobados.has(ramo.nombre)) {
-            aprobados.delete(ramo.nombre);  // Deseleccionar
-          } else {
-            aprobados.add(ramo.nombre);     // Seleccionar
-          }
-          actualizarEstadoRamos();
+      boton.addEventListener("click", () => {
+        if (estadoRamos[ramo.nombre]) {
+          estadoRamos[ramo.nombre] = false;
+          boton.classList.remove("activo");
         } else {
-          alert("Aún no cumples con los prerrequisitos para: " + ramo.nombre);
+          if (ramo.prerequisitos?.every(pr => estadoRamos[pr])) {
+            estadoRamos[ramo.nombre] = true;
+            boton.classList.add("activo");
+          } else {
+            alert("Debes cumplir todos los prerrequisitos antes de seleccionar este ramo.");
+          }
         }
       });
 
-      divSemestre.appendChild(divRamo);
+      semestreDiv.appendChild(boton);
     });
 
-    contenedor.appendChild(divSemestre);
+    container.appendChild(semestreDiv);
   }
-  actualizarEstadoRamos();
 }
 
-document.addEventListener("DOMContentLoaded", crearMallaInteractiva);
+crearInterfaz();
