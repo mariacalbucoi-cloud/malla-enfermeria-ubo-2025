@@ -1,4 +1,4 @@
- const malla = {
+const malla = {
   "Primer semestre": [
     { nombre: "Habilidades Académicas I" },
     { nombre: "Inglés I" },
@@ -84,8 +84,8 @@ function actualizarEstadoRamos() {
     const nombre = divRamo.dataset.nombre;
     const prerequisitos = JSON.parse(divRamo.dataset.prerequisitos || '[]');
     if (aprobados.has(nombre)) {
-      divRamo.classList.add('aprobado');
       divRamo.classList.remove('bloqueado');
+      divRamo.classList.add('aprobado');
     } else if (puedeDesbloquear(prerequisitos)) {
       divRamo.classList.remove('bloqueado');
       divRamo.classList.remove('aprobado');
@@ -98,7 +98,7 @@ function actualizarEstadoRamos() {
 
 function crearMallaInteractiva() {
   const contenedor = document.getElementById("malla-container");
-  contenedor.innerHTML = "";
+  contenedor.innerHTML = ""; // limpiar contenido antes de crear para evitar duplicados
 
   for (const [semestre, ramos] of Object.entries(malla)) {
     const divSemestre = document.createElement("div");
@@ -113,16 +113,15 @@ function crearMallaInteractiva() {
       divRamo.dataset.prerequisitos = JSON.stringify(ramo.prerequisitos || []);
 
       divRamo.addEventListener("click", () => {
-        if (!aprobados.has(ramo.nombre)) {
-          if (puedeDesbloquear(ramo.prerequisitos)) {
-            aprobados.add(ramo.nombre);
-            actualizarEstadoRamos();
+        if (puedeDesbloquear(ramo.prerequisitos)) {
+          if (aprobados.has(ramo.nombre)) {
+            aprobados.delete(ramo.nombre);
           } else {
-            alert("Aún no cumples con los prerrequisitos para: " + ramo.nombre);
+            aprobados.add(ramo.nombre);
           }
-        } else {
-          aprobados.delete(ramo.nombre);
           actualizarEstadoRamos();
+        } else {
+          alert("Aún no cumples con los prerrequisitos para: " + ramo.nombre);
         }
       });
 
