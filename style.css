@@ -1,67 +1,215 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #fdf1f9;
-  color: #3a003a;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Enfermería UBO 2025</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/medical.png');
+      background-color: #e0f7fa;
+      font-family: Arial, sans-serif;
+    }
+    .ramo {
+      cursor: pointer;
+      margin-bottom: 8px;
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #90caf9;
+      background-color: #e3f2fd;
+      transition: 0.3s;
+    }
+    .ramo.aprobado {
+      background-color: #b2ebf2;
+      border-color: #4dd0e1;
+    }
+    .ramo.bloqueado {
+      background-color: #eeeeee;
+      border-color: #b0bec5;
+      opacity: 0.6;
+    }
+    .semestre {
+      border: 2px solid #81d4fa;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 10px;
+      width: 300px;
+      background-color: #f1f8ff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    #malla-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    header {
+      background-color: #4fc3f7;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    footer {
+      background-color: #4fc3f7;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Malla Curricular Enfermería UBO</h1>
+    <p>Versión 2025 - Interactiva</p>
+  </header>
 
-header {
-  background-color: #b43dbb;
-  color: white;
-  padding: 1.5rem;
-  text-align: center;
-}
+  <main id="malla-container"></main>
 
-footer {
-  background-color: #b43dbb;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
+  <footer>
+  <p>Created by: María Cuevas Calbucoi - Enfermería</p>
+  <p>Universidad Bernardo O'Higgins - 2025</p>
+</footer>
 
-#malla-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-}
+  <script>
+    const malla = {
+  "Primer semestre": [
+    { nombre: "Habilidades Académicas I" },
+    { nombre: "Inglés I" },
+    { nombre: "Fundamentos de Biología y Genética Humana" },
+    { nombre: "Bases Químicas y Bioquímicas de la Vida" },
+    { nombre: "Gestión del Cuidado en Enfermería I" },
+    { nombre: "Educación en Enfermería I" }
+  ],
+  "Segundo semestre": [
+    { nombre: "Habilidades Académicas II", prerequisitos: ["Habilidades Académicas I"] },
+    { nombre: "Inglés II", prerequisitos: ["Inglés I"] },
+    { nombre: "Morfología Micro y Macroscópica", prerequisitos: ["Fundamentos de Biología y Genética Humana"] },
+    { nombre: "Microbiología y Agentes Infecciosos", prerequisitos: ["Bases Químicas y Bioquímicas de la Vida"] },
+    { nombre: "Gestión del Cuidado en Enfermería II", prerequisitos: ["Gestión del Cuidado en Enfermería I"] },
+    { nombre: "Educación en Enfermería II", prerequisitos: ["Educación en Enfermería I"] }
+  ],
+  "Tercer semestre": [
+    { nombre: "Ética y Ciudadanía" },
+    { nombre: "Inglés III", prerequisitos: ["Inglés II"] },
+    { nombre: "Fisiología y Fisiopatología de Sistemas I", prerequisitos: ["Morfología Micro y Macroscópica"] },
+    { nombre: "Gestión del Cuidado en Enfermería III", prerequisitos: ["Gestión del Cuidado en Enfermería II"] },
+    { nombre: "Enfermería en Salud Pública y Determinantes Sociales en Salud", prerequisitos: ["Educación en Enfermería II"] },
+    { nombre: "Socio Antropología en Humanización del Cuidado" },
+    { nombre: "Práctica Integrada en Enfermería I", prerequisitos: ["Gestión del Cuidado en Enfermería II"] }
+  ],
+  "Cuarto semestre": [
+    { nombre: "Responsabilidad Social Universitaria", prerequisitos: ["Ética y Ciudadanía"] },
+    { nombre: "Inglés IV", prerequisitos: ["Inglés III"] },
+    { nombre: "Fisiología y Fisiopatología de Sistemas II", prerequisitos: ["Fisiología y Fisiopatología de Sistemas I"] },
+    { nombre: "Farmacología Clínica Fundamental", prerequisitos: ["Microbiología y Agentes Infecciosos"] },
+    { nombre: "Gestión en Servicios de Salud", prerequisitos: ["Gestión del Cuidado en Enfermería III"] },
+    { nombre: "Matemáticas, TICs e Informática" },
+    { nombre: "Práctica Integrada en Enfermería II", prerequisitos: ["Gestión del Cuidado en Enfermería III", "Práctica Integrada en Enfermería I"] }
+  ],
+  "Quinto semestre": [
+    { nombre: "Gestión del Cuidado en Comunidades I", prerequisitos: ["Enfermería en Salud Pública y Determinantes Sociales en Salud"] },
+    { nombre: "Gestión del Cuidado en el Adulto I", prerequisitos: ["Gestión del Cuidado en Enfermería III"] },
+    { nombre: "Metodología de la Investigación y Bioética", prerequisitos: ["Matemáticas, TICs e Informática"] },
+    { nombre: "Gestión del Cuidado en la Persona Mayor", prerequisitos: ["Gestión del Cuidado en Enfermería III", "Farmacología Clínica Fundamental", "Fisiología y Fisiopatología de Sistemas II"] },
+    { nombre: "Calidad y Gestión en el Cuidado", prerequisitos: ["Gestión en Servicios de Salud"] },
+    { nombre: "Práctica Integrada en Enfermería III", prerequisitos: ["Farmacología Clínica Fundamental", "Fisiología y Fisiopatología de Sistemas II", "Práctica Integrada en Enfermería II"] }
+  ],
+  "Sexto semestre": [
+    { nombre: "Proyecto de Investigación I", prerequisitos: ["Metodología de la Investigación y Bioética"] },
+    { nombre: "Gestión del Cuidado en Comunidades II", prerequisitos: ["Gestión del Cuidado en Comunidades I"] },
+    { nombre: "Gestión del Cuidado en el Adulto II", prerequisitos: ["Gestión del Cuidado en el Adulto I"] },
+    { nombre: "Gestión del Cuidado en la Mujer", prerequisitos: ["Farmacología Clínica Fundamental", "Fisiología y Fisiopatología de Sistemas II"] },
+    { nombre: "Electivo Formación General I" },
+    { nombre: "Práctica Integrada en Enfermería IV", prerequisitos: ["Gestión del Cuidado en Comunidades I"] }
+  ],
+  "Séptimo semestre": [
+    { nombre: "Proyecto de Investigación II", prerequisitos: ["Metodología de la Investigación y Bioética"] },
+    { nombre: "Gestión del Cuidado en Comunidades III", prerequisitos: ["Gestión del Cuidado en Comunidades II"] },
+    { nombre: "Gestión del Cuidado en Urgencias", prerequisitos: ["Gestión del Cuidado en el Adulto II"] },
+    { nombre: "Gestión del Cuidado en Niño y Adolescente I", prerequisitos: ["Gestión del Cuidado en la Mujer"] },
+    { nombre: "Gestión del Cuidado en Salud Mental I", prerequisitos: ["Gestión del Cuidado en el Adulto II"] },
+    { nombre: "Práctica Integrada en Enfermería V", prerequisitos: ["Gestión del Cuidado en la Mujer"] }
+  ],
+  "Octavo semestre": [
+    { nombre: "Gestión del Cuidado en Niño y Adolescente II", prerequisitos: ["Gestión del Cuidado en Niño y Adolescente I"] },
+    { nombre: "Gestión del Cuidado en Salud Mental II", prerequisitos: ["Gestión del Cuidado en Salud Mental I"] },
+    { nombre: "Cuidados de la Salud e Interculturalidad", prerequisitos: ["Gestión del Cuidado en Comunidades III"] },
+    { nombre: "Electivo Formación General II" },
+    { nombre: "Práctica Integrada en Enfermería VI", prerequisitos: ["Gestión del Cuidado en Urgencias"] }
+  ],
+  "Noveno semestre": [
+    { nombre: "Práctica Profesional de Enfermería I", prerequisitos: ["Práctica Integrada en Enfermería VI"] }
+  ],
+  "Décimo semestre": [
+    { nombre: "Electivo de Profundización", prerequisitos: ["Práctica Integrada en Enfermería VI"] },
+    { nombre: "Práctica Profesional en Enfermería II", prerequisitos: ["Práctica Integrada en Enfermería VI"] }
+  ]
+};
+    const aprobados = new Set();
 
-.semestre {
-  background-color: #ffffff;
-  border: 2px solid #c75ae2;
-  border-radius: 12px;
-  width: 280px;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+    function puedeDesbloquear(prerequisitos) {
+      return (prerequisitos || []).every(req => aprobados.has(req));
+    }
 
-.semestre h2 {
-  color: #a029a0;
-  border-bottom: 1px solid #e0a7e9;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
+    function actualizarEstadoRamos() {
+      document.querySelectorAll('.ramo').forEach(divRamo => {
+        const nombre = divRamo.dataset.nombre;
+        const prerequisitos = JSON.parse(divRamo.dataset.prerequisitos || '[]');
+        if (aprobados.has(nombre)) {
+          divRamo.classList.remove('bloqueado');
+          divRamo.classList.add('aprobado');
+        } else if (puedeDesbloquear(prerequisitos)) {
+          divRamo.classList.remove('bloqueado');
+        } else {
+          divRamo.classList.add('bloqueado');
+        }
+      });
+    }
 
-.ramo {
-  background-color: #fce4fc;
-  border: 1px solid #eaa1ee;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-}
+    function crearMallaInteractiva() {
+      const contenedor = document.getElementById("malla-container");
+      for (const [semestre, ramos] of Object.entries(malla)) {
+        const divSemestre = document.createElement("div");
+        divSemestre.className = "semestre";
+        divSemestre.innerHTML = `<h2>${semestre}</h2>`;
 
-.ramo:hover {
-  background-color: #f9d4f8;
-}
+        ramos.forEach(ramo => {
+          const divRamo = document.createElement("div");
+          divRamo.className = "ramo bloqueado";
+          divRamo.textContent = ramo.nombre;
+          divRamo.dataset.nombre = ramo.nombre;
+          divRamo.dataset.prerequisitos = JSON.stringify(ramo.prerequisitos || []);
 
-.prerrequisitos {
-  display: none;
-  font-size: 0.85rem;
-  margin-top: 0.3rem;
-  color: #5c3d5c;
-}
+          const info = document.createElement("div");
+          info.style.fontSize = '0.85em';
+          info.style.marginTop = '4px';
+          info.textContent = ramo.prerequisitos && ramo.prerequisitos.length
+            ? `Prerrequisitos: ${ramo.prerequisitos.join(", ")}`
+            : "Sin prerrequisitos";
 
+          divRamo.appendChild(info);
+
+          divRamo.addEventListener("click", () => {
+            if (puedeDesbloquear(ramo.prerequisitos)) {
+              if (!aprobados.has(ramo.nombre)) {
+                aprobados.add(ramo.nombre);
+                actualizarEstadoRamos();
+              }
+            } else {
+              alert("Aún no cumples con los prerrequisitos para: " + ramo.nombre);
+            }
+          });
+
+          divSemestre.appendChild(divRamo);
+        });
+
+        contenedor.appendChild(divSemestre);
+      }
+      actualizarEstadoRamos();
+    }
+
+    document.addEventListener("DOMContentLoaded", crearMallaInteractiva);
+  </script>
+</body>
+</html>
